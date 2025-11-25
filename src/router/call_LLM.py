@@ -21,11 +21,14 @@ def call_openai(prompt: str, model: str = "gpt-4o-mini") -> str:
 def call_gemini(prompt: str, model: str = "gemini-1.5-flash") -> str:
     """Call Google Gemini API"""
     try:
-        # ignore the warning, the import has been resolved
-        import google.generativeai as genai
-        genai.configure(api_key=os.getenv("GOOGLE_API_KEY"))
-        model_instance = genai.GenerativeModel(model)
-        response = model_instance.generate_content(prompt)
+        from google import genai
+        client = genai.Client(api_key=os.getenv("GOOGLE_API_KEY"))
+        response = client.models.generate_content(
+            model=model,
+            contents=prompt
+        )
+
+        client.close()
         return response.text
     except Exception as e:
         return f"Error calling Gemini: {str(e)}"

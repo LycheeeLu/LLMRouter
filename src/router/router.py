@@ -15,16 +15,16 @@ class LLMRouter:
 
 Classify this customer query into ONLY ONE category:
 - FAQ: General questions about hours, services, pricing, appointments, location, or policies
-- ORDER_STATUS: Questions about prescription orders, lab results, test results, or supply orders
+- ORDER: Questions about prescription orders, lab results, test results, or supply orders
 
 Query: {query}
 
-Respond with ONLY one word: FAQ or ORDER_STATUS"""
+Respond with ONLY one word: FAQ or ORDER"""
 
         intent = self.llm_function(classification_prompt).strip().upper()
 
         # Routing
         if "FAQ" in intent:
-            return self.faq_agent.handle(query, self.llm_function)
+            return self.faq_agent.handle(query)
         else:
-            return self.order_agent.handle(query, self.llm_function)
+            return self.order_agent.handle(query)

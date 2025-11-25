@@ -1,0 +1,66 @@
+# ========================================
+# Python
+# ========================================
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pdb
+*.egg-info/
+*.log
+
+# Virtual environment
+venv/
+env/
+.venv/
+
+# Build artifacts
+dist/
+build/
+*.egg
+*.whl
+
+# IDE settings
+.vscode/
+.idea/
+*.code-workspace
+
+# Mac / Windows noise
+.DS_Store
+Thumbs.db
+
+# ========================================
+# Project-specific (LLM keys, configs)
+# ========================================
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# API key backups
+keys.txt
+apikey.txt
+*key*
+*secret*
+
+# Cache / temp files
+cache/
+tmp/
+temp/
+*.tmp
+
+# ========================================
+# Model outputs / evaluation artifacts
+# ========================================
+results/
+outputs/
+*.json
+*.csv
+
+# ========================================
+# Optional: If using Google SDK / AWS
+# ========================================
+credentials.json
+.gcloud/
+.aws/

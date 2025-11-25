@@ -1,6 +1,9 @@
+from agents import faq_agent
+from agents import order_agent
+
 class LLMRouter:
 
-    def __init__(self, faq_agent: FAQAgent, order_agent: OrderStatusAgent, llm_function):
+    def __init__(self, faq_agent: faq_agent, order_agent: order_agent, llm_function):
         self.faq_agent = faq_agent
         self.order_agent = order_agent
         self.llm_function = llm_function

@@ -1,9 +1,12 @@
+import os
+
 # LLM API function calls
 def call_openai(prompt: str, model: str = "gpt-4o-mini") -> str:
     """Call OpenAI API"""
     try:
-        import openai
+        from openai import openAI
         client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+        print("OpenAI key:", os.getenv("OPENAI_API_KEY"))
         response = client.chat.completions.create(
             model=model,
             messages=[{"role": "user", "content": prompt}],

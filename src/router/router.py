@@ -1,5 +1,5 @@
-from agents import faq_agent
-from agents import order_agent
+from ..agents import faq_agent
+from ..agents import order_agent
 
 class LLMRouter:
 
@@ -28,4 +28,3 @@ Respond with ONLY one word: FAQ or ORDER_STATUS"""
             return self.faq_agent.handle(query, self.llm_function)
         else:
             return self.order_agent.handle(query, self.llm_function)
-

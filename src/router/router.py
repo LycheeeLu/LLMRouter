@@ -10,7 +10,7 @@ class LLMRouter:
 
 
     def route(self, query: str) -> str:
-        # classification
+        # classification first
         classification_prompt = f"""You are a routing system for a veterinary clinic customer service bot.
 
 Classify this customer query into ONLY ONE category:

@@ -5,7 +5,7 @@ class FAQAgent:
     def __init__ (self, faq_data: Dict[str, str]):
         self.faq_data = faq_data
 
-    def respond(self, query: str) -> str:
+    def handle(self, query: str) -> str:
         # sanitize capital letters
         q = query.lower()
 

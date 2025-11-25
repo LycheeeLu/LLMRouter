@@ -6,7 +6,7 @@ class OrderAgent:
     def __init__ (self, order_data: Dict[str, Dict[str, Any]]):
         self.order_data = order_data
 
-    def respond(self, query: str) -> str:
+    def handle(self, query: str) -> str:
         # sanitize capital letters
         q = query.lower()
 

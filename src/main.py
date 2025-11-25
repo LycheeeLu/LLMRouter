@@ -12,7 +12,7 @@ def main():
     order_agent = OrderAgent(ORDER_DATA)
 
     # change it to call different LLM
-    llm_function = call_openai
+    llm_function = call_gemini
     router = LLMRouter(faq_agent, order_agent, llm_function)
 
     print("=======Testing LLM router=========")

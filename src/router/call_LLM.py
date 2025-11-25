@@ -21,7 +21,7 @@ def call_openai(prompt: str, model: str = "gpt-4o-mini") -> str:
         return f"Error calling OpenAI: {str(e)}"
 
 
-def call_gemini(prompt: str, model: str = "gemini-1.5-flash") -> str:
+def call_gemini(prompt: str, model: str = "gemini-2.0-flash") -> str:
     """Call Google Gemini API"""
     try:
         from google import genai

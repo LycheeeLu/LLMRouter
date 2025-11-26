@@ -1,9 +1,13 @@
 import time
 from typing import List, Dict, Callable
-from main import (
-    FAQ_DATA, OrderAgent, LLMRouter,
-    FAQAgent, ORDER_DATA,
-    call_gemini, call_openai
+from .main import (
+    FAQ_DATA,
+    ORDER_DATA,
+    FAQAgent,
+    OrderAgent,
+    LLMRouter,
+    call_gemini,
+    call_openai,
 )
 
 # Test cases with expected intents
@@ -21,16 +25,16 @@ TEST_CASES = [
     {"query": "How can I contact you?", "expected": "FAQ"},
 
     # Order status queries
-    {"query": "Where is my order ORD123?", "expected": "ORDER_STATUS"},
-    {"query": "Is order ORD456 ready for pickup?", "expected": "ORDER_STATUS"},
-    {"query": "Can you check the status of ORD789?", "expected": "ORDER_STATUS"},
-    {"query": "When will my prescription ORD321 be ready?", "expected": "ORDER_STATUS"},
-    {"query": "Has ORD123 shipped yet?", "expected": "ORDER_STATUS"},
-    {"query": "I'm checking on my lab results for order ORD456", "expected": "ORDER_STATUS"},
-    {"query": "What's happening with order ORD789?", "expected": "ORDER_STATUS"},
-    {"query": "Track my order ORD321", "expected": "ORDER_STATUS"},
-    {"query": "Status of ORD123 please", "expected": "ORDER_STATUS"},
-    {"query": "Where's ORD456?", "expected": "ORDER_STATUS"},
+    {"query": "Where is my order ORD123?", "expected": "ORDER"},
+    {"query": "Is order ORD456 ready for pickup?", "expected": "ORDER"},
+    {"query": "Can you check the status of ORD789?", "expected": "ORDER"},
+    {"query": "When will my prescription ORD321 be ready?", "expected": "ORDER"},
+    {"query": "Has ORD123 shipped yet?", "expected": "ORDER"},
+    {"query": "I'm checking on my lab results for order ORD456", "expected": "ORDER"},
+    {"query": "What's happening with order ORD789?", "expected": "ORDER"},
+    {"query": "Track my order ORD321", "expected": "ORDER"},
+    {"query": "Status of ORD123 please", "expected": "ORDER"},
+    {"query": "Where's ORD456?", "expected": "ORDER"},
 ]
 
 
@@ -59,7 +63,6 @@ def evaluate_model(model_name: str, llm_function: Callable, test_cases: List[Dic
     Evaluate LLM routing performance on 3 key metrics:
     1. Accuracy - Does LLM predict correct intent?
     2. Latency - How fast is the LLM inference?
-    3. Robustness - Does LLM output valid intents, instead of "BOTH"or "NULL" or "ERROR"
     """
 
     print(f"\n{'='*60}")
@@ -69,7 +72,6 @@ def evaluate_model(model_name: str, llm_function: Callable, test_cases: List[Dic
     total = len(test_cases)
     errors = []
     latencies = []
-    invalid_outputs = []
 
     for i, test_case in enumerate(test_cases, 1):
         query = test_case["query"]
@@ -81,17 +83,13 @@ def evaluate_model(model_name: str, llm_function: Callable, test_cases: List[Dic
             predicted = classify_intent(query, llm_function)
             latency = time.time() - start_time
             latencies.append(latency)
-            # Check robustness: is the output valid
+            # Check first is the output valid
             valid_intents = ["FAQ", "ORDER"]
             is_valid = any(intent in predicted for intent in valid_intents)
             # invalid output
             if not is_valid:
-                invalid_outputs.append({
-                    "query": query,
-                    "output": predicted
-                })
                 is_correct = False
-                status = "INVALID"
+                status = "WRONG"
             # Check accuracy
             else:
                 # predicted intent === expected intent
@@ -104,7 +102,6 @@ def evaluate_model(model_name: str, llm_function: Callable, test_cases: List[Dic
                     "query": query,
                     "expected": expected,
                     "predicted": predicted,
-                    "valid": is_valid
                 })
 
             print(f"{status} [{i:2d}/{total}] '{query[:35]:<35}' Expected: {expected:<12} Got: {predicted:<15} ({latency*1000:.0f}ms)")
@@ -115,12 +112,8 @@ def evaluate_model(model_name: str, llm_function: Callable, test_cases: List[Dic
                 "query": query,
                 "expected": expected,
                 "predicted": f"ERROR: {str(e)}",
-                "valid": False
             })
-            invalid_outputs.append({
-                "query": query,
-                "output": f"ERROR: {str(e)}"
-            })
+
 
 
     # Calculate metrics
@@ -128,7 +121,7 @@ def evaluate_model(model_name: str, llm_function: Callable, test_cases: List[Dic
     avg_latency = sum(latencies) / len(latencies) if latencies else 0
     p50_latency = sorted(latencies)[len(latencies)//2] if latencies else 0
     p95_latency = sorted(latencies)[int(len(latencies)*0.95)] if latencies else 0
-    robustness = ((total - len(invalid_outputs)) / total) * 100
+
 
     results = {
         "model": model_name,
@@ -139,16 +132,12 @@ def evaluate_model(model_name: str, llm_function: Callable, test_cases: List[Dic
         "p50_latency": p50_latency,
         #worse case scenario
         "p95_latency": p95_latency,
-        "robustness": robustness,
-        "invalid_count": len(invalid_outputs),
         "errors": errors,
-        "invalid_outputs": invalid_outputs
     }
 
     print(f"\n {model_name} Results:")
     print(f"Accuracy:   {accuracy:.1f}% ({correct}/{total})")
     print(f"Latency:    avg={avg_latency*1000:.0f}ms, p50={p50_latency*1000:.0f}ms, p95={p95_latency*1000:.0f}ms")
-    print(f"Robustness: {robustness:.1f}% ({total - len(invalid_outputs)}/{total} valid outputs)")
 
     return results
 
@@ -177,7 +166,7 @@ def run_evaluation():
     print("\n" + "="*100)
     print("MODEL COMPARISON - THREE KEY METRICS")
     print("="*100)
-    print(f"{'Model':<25} {'Accuracy':<12} {'Avg Latency':<15} {'P95 Latency':<15} {'Robustness':<12}")
+    print(f"{'Model':<25} {'Accuracy':<12} {'Avg Latency':<15} {'P95 Latency':<15} ")
     print("-"*100)
 
     for result in sorted(all_results, key=lambda x: x['accuracy'], reverse=True):
@@ -186,5 +175,26 @@ def run_evaluation():
             f"{result['accuracy']:>6.1f}%{'':<5} "
             f"{result['avg_latency']*1000:>6.0f}ms{'':<8} "
             f"{result['p95_latency']*1000:>6.0f}ms{'':<8} "
-            f"{result['robustness']:>6.1f}%"
         )
+
+    # determine best model
+    if all_results:
+        print("RECOMMENDATION BASED ON SCORING")
+
+       # Score each model (accuracy=70%, latency=30%)
+        for result in all_results:
+            accuracy_score = result['accuracy']
+            latency_score = max(0, 100 - (result['avg_latency'] * 100))
+            total_score = (accuracy_score * 0.7) + (latency_score * 0.3)
+            result['total_score'] = total_score
+
+        best = max(all_results, key=lambda x: x['total_score'])
+
+        print(f"\nBest Overall (Weighted Score): {best['model']}")
+        print(f"   Score: {best['total_score']:.1f}/100")
+
+    return all_results
+
+
+if __name__ == "__main__":
+    run_evaluation()

@@ -8,6 +8,8 @@ from .main import (
     LLMRouter,
     call_gemini,
     call_openai,
+    call_anthropic,
+    call_groq
 )
 
 # Test cases with expected intents
@@ -145,9 +147,12 @@ def run_evaluation():
     """Run evaluation on all available models"""
 
     models_to_test = [
-        ("GPT-4o-mini", call_openai),
-        ("Gemini 2.0 Flash", call_gemini),
+        ("llama3-70b-8192", call_groq),
+        ("claude-sonnet-4", call_anthropic)
     ]
+
+    # ("GPT-4o-mini", call_openai),
+    # ("Gemini 2.0 Flash", call_gemini),
 
     all_results = []
 

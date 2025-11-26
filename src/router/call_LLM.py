@@ -37,7 +37,7 @@ def call_gemini(prompt: str, model: str = "gemini-2.0-flash") -> str:
         return f"Error calling Gemini: {str(e)}"
 
 
-def call_anthropic(prompt: str, model: str = "claude-sonnet-4") -> str:
+def call_anthropic(prompt: str, model: str = "claude-sonnet-4-20250514") -> str:
     """Call Anthropic Claude API"""
     try:
         import anthropic
@@ -52,7 +52,7 @@ def call_anthropic(prompt: str, model: str = "claude-sonnet-4") -> str:
     except Exception as e:
         return f"Error: {str(e)}"
 
-def call_groq(prompt: str, model: str = "llama3-70b-8192") -> str:
+def call_groq(prompt: str, model: str = "groq/compound") -> str:
     """Call Groq API"""
     try:
         from groq import Groq

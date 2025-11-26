@@ -12,7 +12,7 @@ class LLMRouter:
 
 
     def route(self, query: str) -> str:
-        # classification first
+        # classification first, same as the ones in evaluation.py
         classification_prompt = f"""You are a routing system for a veterinary clinic customer service bot.
 
 Classify this customer query into ONLY ONE category:
@@ -23,6 +23,7 @@ Query: {query}
 
 Respond with ONLY one word: FAQ or ORDER"""
 
+
         intent_raw = self.llm_function(classification_prompt).strip().upper()
         print(intent_raw)
         if intent_raw.startswith("ERROR CALLING"):
@@ -30,7 +31,7 @@ Respond with ONLY one word: FAQ or ORDER"""
         else:
             intent = intent_raw
 
-        # Routing
+        # Routing needs to fix here no if else.
         if "FAQ" in intent:
             return self.faq_agent.handle(query)
         else:

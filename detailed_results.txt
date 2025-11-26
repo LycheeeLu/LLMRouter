@@ -1,0 +1,128 @@
+LLM Router Evaluation
+Testing 4 models on 20 test cases
+
+============================================================
+Evaluating: GPT-4o-mini
+============================================================
+CORRECT [ 1/20] 'What time do you close on Saturday?' Expected: FAQ          Got: FAQ             (962ms)
+CORRECT [ 2/20] 'How much does a wellness exam cost?' Expected: FAQ          Got: FAQ             (498ms)
+CORRECT [ 3/20] 'Do you offer emergency services?   ' Expected: FAQ          Got: FAQ             (499ms)
+CORRECT [ 4/20] 'Where is your clinic located?      ' Expected: FAQ          Got: FAQ             (415ms)
+CORRECT [ 5/20] 'Can I book an appointment online?  ' Expected: FAQ          Got: FAQ             (403ms)
+CORRECT [ 6/20] 'What services do you provide?      ' Expected: FAQ          Got: FAQ             (453ms)
+CORRECT [ 7/20] 'Are you open on Sunday?            ' Expected: FAQ          Got: FAQ             (649ms)
+CORRECT [ 8/20] 'How much is a dental cleaning?     ' Expected: FAQ          Got: FAQ             (574ms)
+CORRECT [ 9/20] 'What's your emergency number?      ' Expected: FAQ          Got: FAQ             (622ms)
+CORRECT [10/20] 'How can I contact you?             ' Expected: FAQ          Got: FAQ             (484ms)
+CORRECT [11/20] 'Where is my order ORD123?          ' Expected: ORDER        Got: ORDER           (410ms)
+CORRECT [12/20] 'Is order ORD456 ready for pickup?  ' Expected: ORDER        Got: ORDER           (409ms)
+CORRECT [13/20] 'Can you check the status of ORD789?' Expected: ORDER        Got: ORDER           (428ms)
+CORRECT [14/20] 'When will my prescription ORD321 be' Expected: ORDER        Got: ORDER           (365ms)
+CORRECT [15/20] 'Has ORD123 shipped yet?            ' Expected: ORDER        Got: ORDER           (536ms)
+CORRECT [16/20] 'I'm checking on my lab results for ' Expected: ORDER        Got: ORDER           (820ms)
+CORRECT [17/20] 'What's happening with order ORD789?' Expected: ORDER        Got: ORDER           (492ms)
+CORRECT [18/20] 'Track my order ORD321              ' Expected: ORDER        Got: ORDER           (535ms)
+CORRECT [19/20] 'Status of ORD123 please            ' Expected: ORDER        Got: ORDER           (352ms)
+CORRECT [20/20] 'Where's ORD456?                    ' Expected: ORDER        Got: ORDER           (406ms)
+
+ GPT-4o-mini Results:
+Accuracy:   100.0% (20/20)
+Latency:    avg=516ms, p50=492ms, p95=962ms
+
+============================================================
+Evaluating: Gemini 2.0 Flash
+============================================================
+CORRECT [ 1/20] 'What time do you close on Saturday?' Expected: FAQ          Got: FAQ             (796ms)
+CORRECT [ 2/20] 'How much does a wellness exam cost?' Expected: FAQ          Got: FAQ             (508ms)
+CORRECT [ 3/20] 'Do you offer emergency services?   ' Expected: FAQ          Got: FAQ             (526ms)
+CORRECT [ 4/20] 'Where is your clinic located?      ' Expected: FAQ          Got: FAQ             (707ms)
+CORRECT [ 5/20] 'Can I book an appointment online?  ' Expected: FAQ          Got: FAQ             (715ms)
+CORRECT [ 6/20] 'What services do you provide?      ' Expected: FAQ          Got: FAQ             (462ms)
+CORRECT [ 7/20] 'Are you open on Sunday?            ' Expected: FAQ          Got: FAQ             (668ms)
+CORRECT [ 8/20] 'How much is a dental cleaning?     ' Expected: FAQ          Got: FAQ             (813ms)
+CORRECT [ 9/20] 'What's your emergency number?      ' Expected: FAQ          Got: FAQ             (616ms)
+CORRECT [10/20] 'How can I contact you?             ' Expected: FAQ          Got: FAQ             (502ms)
+CORRECT [11/20] 'Where is my order ORD123?          ' Expected: ORDER        Got: ORDER           (549ms)
+CORRECT [12/20] 'Is order ORD456 ready for pickup?  ' Expected: ORDER        Got: ORDER           (605ms)
+CORRECT [13/20] 'Can you check the status of ORD789?' Expected: ORDER        Got: ORDER           (556ms)
+CORRECT [14/20] 'When will my prescription ORD321 be' Expected: ORDER        Got: ORDER           (576ms)
+CORRECT [15/20] 'Has ORD123 shipped yet?            ' Expected: ORDER        Got: ORDER           (592ms)
+CORRECT [16/20] 'I'm checking on my lab results for ' Expected: ORDER        Got: ORDER           (505ms)
+CORRECT [17/20] 'What's happening with order ORD789?' Expected: ORDER        Got: ORDER           (621ms)
+CORRECT [18/20] 'Track my order ORD321              ' Expected: ORDER        Got: ORDER           (542ms)
+CORRECT [19/20] 'Status of ORD123 please            ' Expected: ORDER        Got: ORDER           (548ms)
+CORRECT [20/20] 'Where's ORD456?                    ' Expected: ORDER        Got: ORDER           (858ms)
+
+ Gemini 2.0 Flash Results:
+Accuracy:   100.0% (20/20)
+Latency:    avg=613ms, p50=592ms, p95=858ms
+
+============================================================
+Evaluating: llama3-70b-8192
+============================================================
+CORRECT [ 1/20] 'What time do you close on Saturday?' Expected: FAQ          Got: FAQ             (1380ms)
+CORRECT [ 2/20] 'How much does a wellness exam cost?' Expected: FAQ          Got: FAQ             (991ms)
+CORRECT [ 3/20] 'Do you offer emergency services?   ' Expected: FAQ          Got: FAQ             (1432ms)
+CORRECT [ 4/20] 'Where is your clinic located?      ' Expected: FAQ          Got: FAQ             (1312ms)
+CORRECT [ 5/20] 'Can I book an appointment online?  ' Expected: FAQ          Got: FAQ             (923ms)
+CORRECT [ 6/20] 'What services do you provide?      ' Expected: FAQ          Got: FAQ             (1043ms)
+CORRECT [ 7/20] 'Are you open on Sunday?            ' Expected: FAQ          Got: FAQ             (1331ms)
+CORRECT [ 8/20] 'How much is a dental cleaning?     ' Expected: FAQ          Got: FAQ             (944ms)
+CORRECT [ 9/20] 'What's your emergency number?      ' Expected: FAQ          Got: FAQ             (815ms)
+CORRECT [10/20] 'How can I contact you?             ' Expected: FAQ          Got: FAQ             (1964ms)
+CORRECT [11/20] 'Where is my order ORD123?          ' Expected: ORDER        Got: ORDER           (987ms)
+CORRECT [12/20] 'Is order ORD456 ready for pickup?  ' Expected: ORDER        Got: ORDER           (1331ms)
+CORRECT [13/20] 'Can you check the status of ORD789?' Expected: ORDER        Got: ORDER           (2017ms)
+WRONG [14/20] 'When will my prescription ORD321 be' Expected: ORDER        Got: FAQ             (2079ms)
+CORRECT [15/20] 'Has ORD123 shipped yet?            ' Expected: ORDER        Got: ORDER           (966ms)
+WRONG [16/20] 'I'm checking on my lab results for ' Expected: ORDER        Got: FAQ             (5380ms)
+WRONG [17/20] 'What's happening with order ORD789?' Expected: ORDER        Got: FAQ             (5122ms)
+CORRECT [18/20] 'Track my order ORD321              ' Expected: ORDER        Got: ORDER           (4151ms)
+CORRECT [19/20] 'Status of ORD123 please            ' Expected: ORDER        Got: ORDER           (5167ms)
+CORRECT [20/20] 'Where's ORD456?                    ' Expected: ORDER        Got: ORDER           (5244ms)
+
+ llama3-70b-8192 Results:
+Accuracy:   85.0% (17/20)
+Latency:    avg=2229ms, p50=1380ms, p95=5380ms
+
+============================================================
+Evaluating: claude-sonnet-4
+============================================================
+CORRECT [ 1/20] 'What time do you close on Saturday?' Expected: FAQ          Got: FAQ             (2778ms)
+CORRECT [ 2/20] 'How much does a wellness exam cost?' Expected: FAQ          Got: FAQ             (3172ms)
+CORRECT [ 3/20] 'Do you offer emergency services?   ' Expected: FAQ          Got: FAQ             (2817ms)
+CORRECT [ 4/20] 'Where is your clinic located?      ' Expected: FAQ          Got: FAQ             (2119ms)
+CORRECT [ 5/20] 'Can I book an appointment online?  ' Expected: FAQ          Got: FAQ             (1977ms)
+CORRECT [ 6/20] 'What services do you provide?      ' Expected: FAQ          Got: FAQ             (2334ms)
+CORRECT [ 7/20] 'Are you open on Sunday?            ' Expected: FAQ          Got: FAQ             (2412ms)
+CORRECT [ 8/20] 'How much is a dental cleaning?     ' Expected: FAQ          Got: FAQ             (2356ms)
+CORRECT [ 9/20] 'What's your emergency number?      ' Expected: FAQ          Got: FAQ             (2255ms)
+CORRECT [10/20] 'How can I contact you?             ' Expected: FAQ          Got: FAQ             (2148ms)
+CORRECT [11/20] 'Where is my order ORD123?          ' Expected: ORDER        Got: ORDER           (2573ms)
+CORRECT [12/20] 'Is order ORD456 ready for pickup?  ' Expected: ORDER        Got: ORDER           (2465ms)
+CORRECT [13/20] 'Can you check the status of ORD789?' Expected: ORDER        Got: ORDER           (2641ms)
+CORRECT [14/20] 'When will my prescription ORD321 be' Expected: ORDER        Got: ORDER           (2632ms)
+CORRECT [15/20] 'Has ORD123 shipped yet?            ' Expected: ORDER        Got: ORDER           (2386ms)
+CORRECT [16/20] 'I'm checking on my lab results for ' Expected: ORDER        Got: ORDER           (2354ms)
+CORRECT [17/20] 'What's happening with order ORD789?' Expected: ORDER        Got: ORDER           (2356ms)
+CORRECT [18/20] 'Track my order ORD321              ' Expected: ORDER        Got: ORDER           (2256ms)
+CORRECT [19/20] 'Status of ORD123 please            ' Expected: ORDER        Got: ORDER           (3583ms)
+CORRECT [20/20] 'Where's ORD456?                    ' Expected: ORDER        Got: ORDER           (2022ms)
+
+ claude-sonnet-4 Results:
+Accuracy:   100.0% (20/20)
+Latency:    avg=2482ms, p50=2386ms, p95=3583ms
+
+====================================================================================================
+MODEL COMPARISON - THREE KEY METRICS
+====================================================================================================
+Model                     Accuracy     Avg Latency     P95 Latency
+----------------------------------------------------------------------------------------------------
+GPT-4o-mini                100.0%         516ms            962ms
+Gemini 2.0 Flash           100.0%         613ms            858ms
+claude-sonnet-4            100.0%        2482ms           3583ms
+llama3-70b-8192             85.0%        2229ms           5380ms
+RECOMMENDATION BASED ON SCORING
+
+Best Overall (Weighted Score): GPT-4o-mini
+   Score: 84.5/100

@@ -147,8 +147,11 @@ def run_evaluation():
     """Run evaluation on all available models"""
 
     models_to_test = [
+        ("GPT-4o-mini", call_openai),
+        ("Gemini 2.0 Flash", call_gemini),
         ("llama3-70b-8192", call_groq),
         ("claude-sonnet-4", call_anthropic)
+
     ]
 
     # ("GPT-4o-mini", call_openai),
@@ -197,6 +200,22 @@ def run_evaluation():
 
         print(f"\nBest Overall (Weighted Score): {best['model']}")
         print(f"   Score: {best['total_score']:.1f}/100")
+
+
+    # Save all results to a text file
+    with open("all_results.txt", "w", encoding="utf-8") as f:
+        for result in all_results:
+            f.write(f"Model: {result['model']}\n")
+            f.write(f"Accuracy: {result['accuracy']:.1f}%\n")
+            f.write(f"Average Latency: {result['avg_latency']*1000:.0f}ms\n")
+            f.write(f"P95 Latency: {result['p95_latency']*1000:.0f}ms\n")
+            f.write("Errors:\n")
+            for e in result["errors"]:
+                f.write(f"  - Query: {e['query']}\n")
+                f.write(f"    Expected: {e['expected']}\n")
+                f.write(f"    Predicted: {e['predicted']}\n")
+            f.write("\n" + "="*80 + "\n\n")
+
 
     return all_results
 

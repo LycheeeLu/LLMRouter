@@ -1,0 +1,41 @@
+Model: GPT-4o-mini
+Accuracy: 100.0%
+Average Latency: 516ms
+P95 Latency: 962ms
+Errors:
+
+================================================================================
+
+Model: Gemini 2.0 Flash
+Accuracy: 100.0%
+Average Latency: 613ms
+P95 Latency: 858ms
+Errors:
+
+================================================================================
+
+Model: llama3-70b-8192
+Accuracy: 85.0%
+Average Latency: 2229ms
+P95 Latency: 5380ms
+Errors:
+  - Query: When will my prescription ORD321 be ready?
+    Expected: ORDER
+    Predicted: FAQ
+  - Query: I'm checking on my lab results for order ORD456
+    Expected: ORDER
+    Predicted: FAQ
+  - Query: What's happening with order ORD789?
+    Expected: ORDER
+    Predicted: FAQ
+
+================================================================================
+
+Model: claude-sonnet-4
+Accuracy: 100.0%
+Average Latency: 2482ms
+P95 Latency: 3583ms
+Errors:
+
+================================================================================
+

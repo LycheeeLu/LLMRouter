@@ -59,7 +59,7 @@ def evaluate_model(model_name: str, llm_function: Callable, test_cases: List[Dic
     Evaluate LLM routing performance on 3 key metrics:
     1. Accuracy - Does LLM predict correct intent?
     2. Latency - How fast is the LLM inference?
-    3. Robustness - Does LLM output valid intents?
+    3. Robustness - Does LLM output valid intents, instead of "BOTH"or "NULL" or "ERROR"
     """
 
     print(f"\n{'='*60}")
@@ -121,3 +121,70 @@ def evaluate_model(model_name: str, llm_function: Callable, test_cases: List[Dic
                 "query": query,
                 "output": f"ERROR: {str(e)}"
             })
+
+
+    # Calculate metrics
+    accuracy = (correct / total) * 100
+    avg_latency = sum(latencies) / len(latencies) if latencies else 0
+    p50_latency = sorted(latencies)[len(latencies)//2] if latencies else 0
+    p95_latency = sorted(latencies)[int(len(latencies)*0.95)] if latencies else 0
+    robustness = ((total - len(invalid_outputs)) / total) * 100
+
+    results = {
+        "model": model_name,
+        "accuracy": accuracy,
+        "correct": correct,
+        "total": total,
+        "avg_latency": avg_latency,
+        "p50_latency": p50_latency,
+        #worse case scenario
+        "p95_latency": p95_latency,
+        "robustness": robustness,
+        "invalid_count": len(invalid_outputs),
+        "errors": errors,
+        "invalid_outputs": invalid_outputs
+    }
+
+    print(f"\n {model_name} Results:")
+    print(f"Accuracy:   {accuracy:.1f}% ({correct}/{total})")
+    print(f"Latency:    avg={avg_latency*1000:.0f}ms, p50={p50_latency*1000:.0f}ms, p95={p95_latency*1000:.0f}ms")
+    print(f"Robustness: {robustness:.1f}% ({total - len(invalid_outputs)}/{total} valid outputs)")
+
+    return results
+
+def run_evaluation():
+    """Run evaluation on all available models"""
+
+    models_to_test = [
+        ("GPT-4o-mini", call_openai),
+        ("Gemini 2.0 Flash", call_gemini),
+    ]
+
+    all_results = []
+
+    print("LLM Router Evaluation")
+    print(f"Testing {len(models_to_test)} models on {len(TEST_CASES)} test cases")
+
+    for model_name, llm_function in models_to_test:
+        try:
+            results = evaluate_model(model_name, llm_function, TEST_CASES)
+            all_results.append(results)
+            time.sleep(1)
+        except Exception as e:
+            print(f"Failed to evaluate {model_name}: {str(e)}")
+
+    # Print comparison table
+    print("\n" + "="*100)
+    print("MODEL COMPARISON - THREE KEY METRICS")
+    print("="*100)
+    print(f"{'Model':<25} {'Accuracy':<12} {'Avg Latency':<15} {'P95 Latency':<15} {'Robustness':<12}")
+    print("-"*100)
+
+    for result in sorted(all_results, key=lambda x: x['accuracy'], reverse=True):
+        print(
+            f"{result['model']:<25} "
+            f"{result['accuracy']:>6.1f}%{'':<5} "
+            f"{result['avg_latency']*1000:>6.0f}ms{'':<8} "
+            f"{result['p95_latency']*1000:>6.0f}ms{'':<8} "
+            f"{result['robustness']:>6.1f}%"
+        )
